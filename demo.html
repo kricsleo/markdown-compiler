@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>markdown-compiler</title>
+</head>
+<body>
+  <textarea name="text" id="input" cols="30" rows="10"></textarea>
+  <div id="output" class="output"></div>
+  <script>
+    function init() {
+      const importObject = {
+        imports: {
+          compile: function(arg) {
+            console.log(arg);
+          }
+        }
+      };
+      fetch('../pkg/markdown_compiler.js')
+        // a more reasonable way, but not avaliable with live-server plugins
+        // .then(res => WebAssembly.instantiateStreaming(res, importObject))
+        // .then(res => res.arrayBuffer())
+        // .then(buffer => WebAssembly.instantiate(buffer, importObject))
+        .then(mod => console.log('modd', mod))
+    }
+    // init();
+  </script>
+  <script type="module">
+    import init, { compile } from './pkg/markdown_compiler.js';
+    async function run() {
+      const compiler = await init();
+      console.log("compiler", compiler);
+      const [inputNode, outputNode] = ['input', 'output'].map(t => document.getElementById(t));
+      inputNode.addEventListener('input', e => {
+        const text = e.target.value;
+        console.log('text', text);
+        outputNode.innerHTML = compile(text);
+      });
+    }
+    run();
+  </script>
+</body>
+</html>
