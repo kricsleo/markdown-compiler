@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>markdown-compiler</title>
+  <link rel="stylesheet" href="https://kricsleo.com/style.css">
+  <style>
+    .compiler {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      margin: 0;
+      padding: 20px;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    .compiler__input,
+    .compiler__output {
+      flex: 1 1 40%;
+      overflow: auto;
+    }
+    .compiler__input {
+      margin-right: 15px;
+    }
+  </style>
+</head>
+<body class="compiler">
+  <textarea class="compiler__input" id="compiler__input" name="text"cols="30" rows="10"></textarea>
+  <div class="compiler__output article__content" id="compiler__output"></div>
+  <script>
+    function init() {
+      // 被注入的对象
+      const importObj = {
+        k: {
+          i: msg => console.log(msg)
+        }
+      };
+
+      fetch('example.wasm')
+      .then(response => response.arrayBuffer())
+        .then(buffer => WebAssembly.instantiate(buffer, importObj))
+        .then(result => {
+          const { instance } = result;
+          instance.exports.log('hello, WebAssembly!'); // -> 'hello, WebAssembly!'
+        });
+    }
+    // init();
+  </script>
+  <script type="module">
+    import init, { compile } from './pkg/markdown_compiler.js';
+    async function run() {
+      await init();
+      const [inputNode, outputNode] = ['compiler__input', 'compiler__output'].map(t => document.getElementById(t));
+      inputNode.addEventListener('input', e => outputNode.innerHTML = compile(e.target.value));
+    }
+    run();
+  </script>
+</body>
+</html>
