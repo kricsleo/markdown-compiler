@@ -21,6 +21,6 @@ pub fn compile(text: &str) -> String {
     let compiler = Parser::new_ext(text.trim(), Options::all());
     let mut html = String::new();
     push_html(&mut html, compiler);
-    log(html);
+    log(&html);
     return html;
 }
