@@ -1,0 +1,15 @@
+{
+  "name": "markdown-compiler",
+  "collaborators": [
+    "shengfeng.xu"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "markdown_compiler_bg.wasm",
+    "markdown_compiler.js",
+    "markdown_compiler.d.ts"
+  ],
+  "module": "markdown_compiler.js",
+  "types": "markdown_compiler.d.ts",
+  "sideEffects": false
+}
