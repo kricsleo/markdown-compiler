@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>write</title>
+  <link rel="stylesheet" href="https://kricsleo.com/blog/style.css">
+  <style>
+    body {
+      padding: 0;
+      max-height: 100vh;
+    }
+    .input {
+      border: none;
+      border-right: 1px solid var(--bg);
+      color: var(--text);
+      font-size: var(--font-size);
+    }
+    .input,
+    .article {
+      flex: 1 1 50%;
+      overflow: auto;
+      border-radius: 0;
+    }
+  </style>
+</head>
+<body>
+  <textarea class="input article" id="input" name="text" placeholder="type markdown here"></textarea>
+  <article class="article" id="article"></article>
+  <script type="module">
+    import init, { compile } from './pkg/markdown_compiler.js';
+    async function run() {
+      await init();
+      const [inputNode, outputNode] = ['input', 'article'].map(t => document.getElementById(t));
+      inputNode.addEventListener('input', e => outputNode.innerHTML = compile(e.target.value));
+    }
+    run();
+  </script>
+</body>
+</html>
