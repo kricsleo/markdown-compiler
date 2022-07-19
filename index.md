@@ -165,7 +165,7 @@ wasm-pack build --target no-modules
 ```
 
 - 示例仓库: [markdown-compiler](https://github.com/kricsleo/markdown-compiler)
-- 在线演示: [markdown-compiler](https://github.kricsleo.com/markdown-compiler.html)
+- 在线演示: [markdown-compiler](https://kricsleo.github.io/markdown-compiler/markdown-compiler.html)
 
 ## 浏览器不支持 WebAssembly ?
 
